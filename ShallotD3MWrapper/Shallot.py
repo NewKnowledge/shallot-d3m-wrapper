@@ -132,7 +132,7 @@ if __name__ == '__main__':
     # test using Trace dataset (Bagnall, Lines, Vickers, Keogh, The UEA & UCR Time Series
     # Classification Repository, www.timeseriesclassification.com)
     X_train, y_train, X_test, y_test = CachedDatasets().load_dataset("Trace")
-    client.set_training_data(X_train, y_train)
+    client.set_training_data(inputs = X_train, outputs = y_train)
     client.fit()
     results = client.produce(inputs = X_test)
     print("Predicted Classes")
