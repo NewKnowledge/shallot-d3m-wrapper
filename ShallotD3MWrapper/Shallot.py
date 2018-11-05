@@ -123,6 +123,8 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
             The output is a numpy ndarray containing a predicted class for each of the input time series
         """
         classes = self._shapelets.PredictClasses(inputs)
+        print("Predicted Classes")
+        print(results)
         return CallResult(classes)
 
 
@@ -135,5 +137,3 @@ if __name__ == '__main__':
     client.set_training_data(inputs = X_train, outputs = y_train)
     client.fit()
     results = client.produce(inputs = X_test)
-    print("Predicted Classes")
-    print(results)
