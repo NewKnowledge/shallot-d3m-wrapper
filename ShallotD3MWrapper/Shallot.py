@@ -79,15 +79,15 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
 
         self._decoder = JSONDecoder()
         self._params = {}
-        self.X_train = None          # training inputs
-        self.y_train = None          # training outputs
-        self.shapelets = None        # shapelet classifier
+        self._X_train = None          # training inputs
+        self._y_train = None          # training outputs
+        self._shapelets = None        # shapelet classifier
 
     def fit(self) -> None:
         '''
         fits Shapelet classifier using training data from set_training_data and hyperparameters
         '''
-        self.shapelets = Shapelets(self.X_train, self.y_train, self.hyperparams['epochs'], 
+        self._shapelets = Shapelets(self._X_train, self._y_train, self.hyperparams['epochs'], 
             self.hyperparams['shapelet_length'], self.hyperparams['num_shapelet_lengths'])
 
     def get_params(self) -> Params:
@@ -106,8 +106,8 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
 
         outputs: numpy ndarray of size (number_time_series,) containing classes of training time series
         '''
-        self.X_train = inputs
-        self.y_train = outputs
+        self._X_train = inputs
+        self._y_train = outputs
 
 
     def produce(self, *, inputs: Inputs, timeout: float = None, iterations: int = None) -> CallResult[Outputs]:
@@ -123,7 +123,7 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         Outputs
             The output is a numpy ndarray containing a predicted class for each of the input time series
         """
-        classes = self.shapelets.PredictClasses(inputs)
+        classes = self._shapelets.PredictClasses(inputs)
         return CallResult(classes)
 
 
