@@ -137,4 +137,3 @@ if __name__ == '__main__':
     results = client.produce(inputs = X_test)
     print("Predicted Classes")
     print(results)
-    print("Accuracy = ", accuracy_score(y_test, results))
