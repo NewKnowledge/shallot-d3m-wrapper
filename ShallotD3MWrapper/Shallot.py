@@ -68,8 +68,7 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         # Choose these from a controlled vocabulary in the schema. If anything is missing which would
         # best describe the primitive, make a merge request.
         'algorithm_types': [
-            # find algorithm type
-            # metadata_base.PrimitiveAlgorithmType.AUTOREGRESSIVE_INTEGRATED_MOVING_AVERAGE,
+            metadata_base.PrimitiveAlgorithmType.STOCHASTIC_GRADIENT_DESCENT,
         ],
         'primitive_family': metadata_base.PrimitiveFamily.TIME_SERIES_CLASSIFICATION,
     })
