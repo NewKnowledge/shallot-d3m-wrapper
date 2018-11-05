@@ -124,7 +124,7 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         """
         classes = self._shapelets.PredictClasses(inputs)
         print("Predicted Classes")
-        print(results)
+        print(classes)
         return CallResult(classes)
 
 
