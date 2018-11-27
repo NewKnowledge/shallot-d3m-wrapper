@@ -7,7 +7,7 @@ setup(name='ShallotD3MWrapper',
     install_requires=["typing",
         "Sloth>=2.0.2"],
     dependency_links=[
-        "git+https://github.com/NewKnowledge/sloth@2b4523e602928b8ac5af517643716e36e97bc5ba#egg=Sloth-2.0.2"
+        "git+https://github.com/NewKnowledge/sloth@cf0a040300e6dd627d4cfa17dda98d5143110ff4#egg=Sloth-2.0.2"
 
     ],
     entry_points = {
