@@ -58,6 +58,10 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         # install a Python package first to be even able to run setup.py of another package. Or you have
         # a dependency which is not on PyPi.
          'installation': [{
+             'type': metadata_base.PrimitiveInstallationType.PIP,
+            'package': 'cython',
+            'version': '0.28.5',
+        },{
             'type': metadata_base.PrimitiveInstallationType.PIP,
             'package_uri': 'git+https://github.com/NewKnowledge/shallot-d3m-wrapper.git@{git_commit}#egg=ShallotD3MWrapper'.format(
                 git_commit=utils.current_git_commit(os.path.dirname(__file__)),
