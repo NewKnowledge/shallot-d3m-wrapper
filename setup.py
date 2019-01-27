@@ -12,7 +12,7 @@ setup(name='ShallotD3MWrapper',
     ],
     entry_points = {
         'd3m.primitives': [
-            'distil.shallot = ShallotD3MWrapper:Shallot'
+            'time_series_classification.shapelet_learning.Shallot = ShallotD3MWrapper:Shallot'
         ],
     },
 )
