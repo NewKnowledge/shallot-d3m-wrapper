@@ -40,6 +40,11 @@ class Hyperparams(hyperparams.Hyperparams):
 
 
 class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
+    '''
+    Produce primitive's classifications for new time series data The input is a numpy ndarray of 
+    size (number_of_time_series, time_series_length, dimension) containing new time series. 
+    The output is a numpy ndarray containing a predicted class for each of the input time series.
+    '''
     metadata = metadata_base.PrimitiveMetadata({
         # Simply an UUID generated once and fixed forever. Generated using "uuid.uuid4()".
         'id': "d351fcf8-5d6c-48d4-8bf6-a56fe11e62d6",
