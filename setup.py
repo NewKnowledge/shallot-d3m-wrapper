@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name='ShallotD3MWrapper',
-    version='1.0.0',
+    version='1.0.1',
     description='A thin wrapper for interacting with New Knowledge shapelet learning tool Shallot',
     packages=['ShallotD3MWrapper'],
     install_requires=["typing",
