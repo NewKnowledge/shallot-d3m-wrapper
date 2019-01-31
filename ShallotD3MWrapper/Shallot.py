@@ -7,19 +7,22 @@ from json import JSONDecoder
 from typing import List
 
 from Sloth import Shapelets
-from tslearn.datasets import CachedDatasets
 
 from d3m.primitive_interfaces.base import PrimitiveBase, CallResult
 
 from d3m import container, utils
+from d3m.container import DataFrame as d3m_DataFrame
 from d3m.metadata import hyperparams, base as metadata_base, params
+from common_primitives import utils as utils_cp, dataset_to_dataframe as DatasetToDataFrame
+
+from .timeseriesloader import TimeSeriesLoaderPrimitive
 
 __author__ = 'Distil'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __contact__ = 'mailto:jeffrey.gleason@newknowledge.io'
 
-Inputs = container.numpy.ndarray
-Outputs = container.numpy.ndarray
+Inputs = container.pandas.DataFrame
+Outputs = container.pandas.DataFrame
 
 class Params(params.Params):
     pass
@@ -137,11 +140,10 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
 
 
 if __name__ == '__main__':
-    client = Shallot(hyperparams={'shapelet_length':0.1, 'num_shapelet_lengths':2, 'epochs':200})
-    
-    # test using Trace dataset (Bagnall, Lines, Vickers, Keogh, The UEA & UCR Time Series
-    # Classification Repository, www.timeseriesclassification.com)
-    X_train, y_train, X_test, y_test = CachedDatasets().load_dataset("Trace")
-    client.set_training_data(inputs = X_train, outputs = y_train)
-    client.fit()
-    results = client.produce(inputs = X_test)
+        
+    # Load data and preprocessing
+    input_dataset = container.Dataset.load('file:///data/home/jgleason/D3m/datasets/seed_datasets_current/66_chlorineConcentration/TRAIN/dataset_TRAIN/datasetDoc.json')
+    ds2df_client = DatasetToDataFrame.DatasetToDataFramePrimitive(hyperparams = {"dataframe_resource":"0"})
+    df = d3m_DataFrame(ds2df_client.produce(inputs = input_dataset).value)    
+    shallot_client = Shallot(hyperparams={'shapelet_length': 0.1,'num_shapelet_lengths': 2, 'epochs':200})
+    shallot_client.set_training_data(inputs = df, outputs = 
