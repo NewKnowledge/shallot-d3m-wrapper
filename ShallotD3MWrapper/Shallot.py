@@ -119,7 +119,7 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         outputs: numpy ndarray of size (number_time_series,) containing classes of training time series
         '''
         # load and reshape training data
-        ts_loader = TimeSeriesLoaderPrimitive(hyperparams = {"time_col_index":0, "value_col_index":1, "file_col_index":1})
+        ts_loader = TimeSeriesLoaderPrimitive(hyperparams = {"time_col_index":0, "value_col_index":1, "file_col_index":0})
         inputs = ts_loader.produce(inputs = inputs).value.values
         inputs = np.reshape(inputs, inputs.shape + (1,))
         self._X_train = inputs
@@ -171,14 +171,16 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
 if __name__ == '__main__':
         
     # Load data and preprocessing
+    
     input_dataset = container.Dataset.load('file:///data/home/jgleason/D3m/datasets/seed_datasets_current/66_chlorineConcentration/TRAIN/dataset_TRAIN/datasetDoc.json')
     ds2df_client_values = DatasetToDataFrame.DatasetToDataFramePrimitive(hyperparams = {"dataframe_resource":"0"})
     ds2df_client_labels = DatasetToDataFrame.DatasetToDataFramePrimitive(hyperparams = {"dataframe_resource":"learningData"})
     df = d3m_DataFrame(ds2df_client_values.produce(inputs = input_dataset).value)
     labels = d3m_DataFrame(ds2df_client_labels.produce(inputs = input_dataset).value)    
-    shallot_client = Shallot(hyperparams={'shapelet_length': 0.4,'num_shapelet_lengths': 2, 'epochs':1000})
+    shallot_client = Shallot(hyperparams={'shapelet_length': 0.4,'num_shapelet_lengths': 2, 'epochs':100})
     shallot_client.set_training_data(inputs = df, outputs = labels)
     shallot_client.fit()
+    
     test_dataset = container.Dataset.load('file:///data/home/jgleason/D3m/datasets/seed_datasets_current/66_chlorineConcentration/TEST/dataset_TEST/datasetDoc.json')
     test_df = d3m_DataFrame(ds2df_client_values.produce(inputs = test_dataset).value)
     results = shallot_client.produce(inputs = test_df)
