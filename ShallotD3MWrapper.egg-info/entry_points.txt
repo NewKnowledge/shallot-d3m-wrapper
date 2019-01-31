@@ -1,3 +1,0 @@
-[d3m.primitives]
-time_series_classification.shapelet_learning.Shallot = ShallotD3MWrapper:Shallot
-
