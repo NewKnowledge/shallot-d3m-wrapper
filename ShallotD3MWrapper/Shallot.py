@@ -119,7 +119,7 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         outputs: numpy ndarray of size (number_time_series,) containing classes of training time series
         '''
         # load and reshape training data
-        ts_loader = TimeSeriesLoaderPrimitive(hyperparams = {"time_col_index":0, "value_col_index":1, "file_col_index":None})
+        ts_loader = TimeSeriesLoaderPrimitive(hyperparams = {"time_col_index":0, "value_col_index":1, "file_col_index":1})
         inputs = ts_loader.produce(inputs = inputs).value.values
         inputs = np.reshape(inputs, inputs.shape + (1,))
         self._X_train = inputs
