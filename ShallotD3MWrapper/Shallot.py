@@ -15,7 +15,7 @@ from d3m.container import DataFrame as d3m_DataFrame
 from d3m.metadata import hyperparams, base as metadata_base, params
 from common_primitives import utils as utils_cp, dataset_to_dataframe as DatasetToDataFrame
 
-from .timeseries_loader import TimeSeriesLoaderPrimitive
+from timeseries_loader import TimeSeriesLoaderPrimitive
 
 __author__ = 'Distil'
 __version__ = '1.0.1'
@@ -87,20 +87,22 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         'primitive_family': metadata_base.PrimitiveFamily.TIME_SERIES_CLASSIFICATION,
     })
 
-    def __init__(self, *, hyperparams: Hyperparams, random_seed: int = 0)-> None:
+    def __init__(self, *, hyperparams: Hyperparams, random_seed: int = 0, volumes: typing.Dict[str,str]=None)-> None:
         super().__init__(hyperparams=hyperparams, random_seed=random_seed)
         
+        self.volumes = volumes
         self._params = {}
         self._X_train = None          # training inputs
         self._y_train = None          # training outputs
         self._shapelets = None        # shapelet classifier
 
-    def fit(self) -> None:
+    def fit(self, *, timeout: float = None, iterations: int = None) -> CallResult[None]:
         '''
         fits Shapelet classifier using training data from set_training_data and hyperparameters
         '''
         self._shapelets = Shapelets(self._X_train, self._y_train, self.hyperparams['epochs'], 
             self.hyperparams['shapelet_length'], self.hyperparams['num_shapelet_lengths'])
+        return CallResult(None)
 
     def get_params(self) -> Params:
         return self._params
@@ -138,40 +140,36 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         Outputs
             The output is a numpy ndarray containing a predicted class for each of the input time series
         """
-        #just take d3m index from input test set
-        #output_df = inputs['d3mIndex']
+        # split filenames into d3mIndex (hacky)
+        col_name = inputs.metadata.query_column(0)['name']
+        d3mIndex_df = pandas.DataFrame([int(filename.split('_')[0]) for filename in test_df[col_name]])
 
         ts_loader = TimeSeriesLoaderPrimitive(hyperparams = {"time_col_index":0, "value_col_index":1, "file_col_index":None})
         inputs = ts_loader.produce(inputs = inputs).value.values
         inputs = np.reshape(inputs, inputs.shape + (1,))
-
         # add metadata to output
         # produce classifications using Shapelets
         classes = pandas.DataFrame(self._shapelets.PredictClasses(inputs))
-        #output_df = pandas.concat([output_df, classes], axis = 1)
-        #output_df.columns = [self._columns[0], self._columns[2]]
-        shallot_df = d3m_DataFrame(classes)
+        output_df = pandas.concat([d3mIndex_df, classes], axis = 1)
+        shallot_df = d3m_DataFrame(output_df)
 
         # first column ('d3mIndex')
-        '''
         col_dict = dict(shallot_df.metadata.query((metadata_base.ALL_ELEMENTS, 0)))
         col_dict['structural_type'] = type("1")
         col_dict['name'] = 'd3mIndex'
         col_dict['semantic_types'] = ('http://schema.org/Integer', 'https://metadata.datadrivendiscovery.org/types/PrimaryKey',)
         shallot_df.metadata = shallot_df.metadata.update((metadata_base.ALL_ELEMENTS, 0), col_dict)
-        '''
         # second column ('predictions')
-        col_dict = dict(shallot_df.metadata.query((metadata_base.ALL_ELEMENTS, 0)))
+        col_dict = dict(shallot_df.metadata.query((metadata_base.ALL_ELEMENTS, 1)))
         col_dict['structural_type'] = type("1")
-        col_dict['name'] = 'predictions'
+        col_dict['name'] = 'label'
         col_dict['semantic_types'] = ('http://schema.org/Integer', 'https://metadata.datadrivendiscovery.org/types/Attribute',)
-        shallot_df.metadata = shallot_df.metadata.update((metadata_base.ALL_ELEMENTS, 0), col_dict)
+        shallot_df.metadata = shallot_df.metadata.update((metadata_base.ALL_ELEMENTS, 1), col_dict)
         return CallResult(shallot_df)
 
 if __name__ == '__main__':
         
     # Load data and preprocessing
-    
     input_dataset = container.Dataset.load('file:///data/home/jgleason/D3m/datasets/seed_datasets_current/66_chlorineConcentration/TRAIN/dataset_TRAIN/datasetDoc.json')
     ds2df_client_values = DatasetToDataFrame.DatasetToDataFramePrimitive(hyperparams = {"dataframe_resource":"0"})
     ds2df_client_labels = DatasetToDataFrame.DatasetToDataFramePrimitive(hyperparams = {"dataframe_resource":"learningData"})
