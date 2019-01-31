@@ -91,7 +91,6 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         super().__init__(hyperparams=hyperparams, random_seed=random_seed)
         
         self._params = {}
-        self._columns = None          # list of input columns
         self._X_train = None          # training inputs
         self._y_train = None          # training outputs
         self._shapelets = None        # shapelet classifier
@@ -141,8 +140,6 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
             The output is a numpy ndarray containing a predicted class for each of the input time series
         """
         #just take d3m index from input test set
-        output_df = inputs['d3mIndex']
-
         ts_loader = TimeSeriesLoaderPrimitive(hyperparams = {"time_col_index":0, "value_col_index":1, "file_col_index":None})
         inputs = ts_loader.produce(inputs = inputs).value.values
         inputs = np.reshape(inputs, inputs.shape + (1,))
@@ -150,17 +147,16 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         # add metadata to output
         # produce classifications using Shapelets
         classes = pandas.DataFrame(self._shapelets.PredictClasses(inputs))
-        output_df = pandas.concat([output_df, classes], axis = 1)
-        output_df.columns = [self._columns[0], self._columns[2]]
-        shallot_df = d3m_DataFrame(output_df)
-
+        #output_df = pandas.concat([output_df, classes], axis = 1)
+        shallot_df = d3m_DataFrame(classes)
+        '''
         # first column ('d3mIndex')
         col_dict = dict(shallot_df.metadata.query((metadata_base.ALL_ELEMENTS, 0)))
         col_dict['structural_type'] = type("1")
         col_dict['name'] = 'd3mIndex'
         col_dict['semantic_types'] = ('http://schema.org/Integer', 'https://metadata.datadrivendiscovery.org/types/PrimaryKey',)
         shallot_df.metadata = shallot_df.metadata.update((metadata_base.ALL_ELEMENTS, 0), col_dict)
-       
+        '''
         # second column ('predictions')
         col_dict = dict(shallot_df.metadata.query((metadata_base.ALL_ELEMENTS, 1)))
         col_dict['structural_type'] = type("1")
