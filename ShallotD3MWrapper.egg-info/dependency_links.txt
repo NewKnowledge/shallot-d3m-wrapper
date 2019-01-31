@@ -1,1 +1,0 @@
-git+https://github.com/NewKnowledge/sloth@8e2b856617780b9c1527929a0d0be34d81b272fa#egg=Sloth-2.0.2
