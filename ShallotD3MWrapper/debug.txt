@@ -1,0 +1,127 @@
+None{'produce':     d3mIndex    timeseries_file label
+0          0  0000_train_ts.csv     1
+1          1  0001_train_ts.csv     3
+2          2  0002_train_ts.csv     1
+3          3  0003_train_ts.csv     3
+4          4  0004_train_ts.csv     2
+5          5  0005_train_ts.csv     1
+6          6  0006_train_ts.csv     1
+7          7  0007_train_ts.csv     1
+8          8  0008_train_ts.csv     3
+9          9  0009_train_ts.csv     3
+10        10  0010_train_ts.csv     1
+11        11  0011_train_ts.csv     3
+12        12  0012_train_ts.csv     2
+13        13  0013_train_ts.csv     3
+14        14  0014_train_ts.csv     1
+15        15  0015_train_ts.csv     1
+16        16  0016_train_ts.csv     3
+17        17  0017_train_ts.csv     3
+18        18  0018_train_ts.csv     3
+19        19  0019_train_ts.csv     3
+20        20  0020_train_ts.csv     2
+21        21  0021_train_ts.csv     3
+22        22  0022_train_ts.csv     3
+23        23  0023_train_ts.csv     2
+24        24  0024_train_ts.csv     2
+25        25  0025_train_ts.csv     1
+26        26  0026_train_ts.csv     3
+27        27  0027_train_ts.csv     3
+28        28  0028_train_ts.csv     2
+29        29  0029_train_ts.csv     3
+..       ...                ...   ...
+437      437  0437_train_ts.csv     2
+438      438  0438_train_ts.csv     3
+439      439  0439_train_ts.csv     1
+440      440  0440_train_ts.csv     1
+441      441  0441_train_ts.csv     1
+442      442  0442_train_ts.csv     3
+443      443  0443_train_ts.csv     3
+444      444  0444_train_ts.csv     1
+445      445  0445_train_ts.csv     3
+446      446  0446_train_ts.csv     3
+447      447  0447_train_ts.csv     3
+448      448  0448_train_ts.csv     2
+449      449  0449_train_ts.csv     2
+450      450  0450_train_ts.csv     3
+451      451  0451_train_ts.csv     3
+452      452  0452_train_ts.csv     1
+453      453  0453_train_ts.csv     2
+454      454  0454_train_ts.csv     3
+455      455  0455_train_ts.csv     2
+456      456  0456_train_ts.csv     3
+457      457  0457_train_ts.csv     3
+458      458  0458_train_ts.csv     2
+459      459  0459_train_ts.csv     1
+460      460  0460_train_ts.csv     1
+461      461  0461_train_ts.csv     3
+462      462  0462_train_ts.csv     3
+463      463  0463_train_ts.csv     3
+464      464  0464_train_ts.csv     2
+465      465  0465_train_ts.csv     1
+466      466  0466_train_ts.csv     2
+
+[467 rows x 3 columns]}None{'produce':               filename
+0    0000_train_ts.csv
+1    0001_train_ts.csv
+2    0002_train_ts.csv
+3    0003_train_ts.csv
+4    0004_train_ts.csv
+5    0005_train_ts.csv
+6    0006_train_ts.csv
+7    0007_train_ts.csv
+8    0008_train_ts.csv
+9    0009_train_ts.csv
+10   0010_train_ts.csv
+11   0011_train_ts.csv
+12   0012_train_ts.csv
+13   0013_train_ts.csv
+14   0014_train_ts.csv
+15   0015_train_ts.csv
+16   0016_train_ts.csv
+17   0017_train_ts.csv
+18   0018_train_ts.csv
+19   0019_train_ts.csv
+20   0020_train_ts.csv
+21   0021_train_ts.csv
+22   0022_train_ts.csv
+23   0023_train_ts.csv
+24   0024_train_ts.csv
+25   0025_train_ts.csv
+26   0026_train_ts.csv
+27   0027_train_ts.csv
+28   0028_train_ts.csv
+29   0029_train_ts.csv
+..                 ...
+437  0437_train_ts.csv
+438  0438_train_ts.csv
+439  0439_train_ts.csv
+440  0440_train_ts.csv
+441  0441_train_ts.csv
+442  0442_train_ts.csv
+443  0443_train_ts.csv
+444  0444_train_ts.csv
+445  0445_train_ts.csv
+446  0446_train_ts.csv
+447  0447_train_ts.csv
+448  0448_train_ts.csv
+449  0449_train_ts.csv
+450  0450_train_ts.csv
+451  0451_train_ts.csv
+452  0452_train_ts.csv
+453  0453_train_ts.csv
+454  0454_train_ts.csv
+455  0455_train_ts.csv
+456  0456_train_ts.csv
+457  0457_train_ts.csv
+458  0458_train_ts.csv
+459  0459_train_ts.csv
+460  0460_train_ts.csv
+461  0461_train_ts.csv
+462  0462_train_ts.csv
+463  0463_train_ts.csv
+464  0464_train_ts.csv
+465  0465_train_ts.csv
+466  0466_train_ts.csv
+
+[467 rows x 1 columns]}
