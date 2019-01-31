@@ -164,6 +164,7 @@ class TimeSeriesLoaderPrimitive(transformer.TransformerPrimitiveBase[container.D
 
         # make sure there's a file column that points to a csv (search if unspecified)
         file_col_index = hyperparams['file_col_index']
+        '''
         if file_col_index is not None:
             can_use_column = cls._is_csv_file_column(inputs_metadata, file_col_index)
             if not can_use_column:
@@ -172,7 +173,7 @@ class TimeSeriesLoaderPrimitive(transformer.TransformerPrimitiveBase[container.D
             inferred_index = cls._find_csv_file_column(inputs_metadata)
             if inferred_index is None:
                 return None
-
+        '''
         # we don't have access to the data at this point so there's not much that we can
         # do to figure out the resulting shape etc
         return inputs_metadata
