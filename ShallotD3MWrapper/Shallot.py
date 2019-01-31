@@ -120,7 +120,6 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         outputs: numpy ndarray of size (number_time_series,) containing classes of training time series
         '''
         # load and reshape training data
-        print(self._columns)
         ts_loader = TimeSeriesLoaderPrimitive(hyperparams = {"time_col_index":0, "value_col_index":1, "file_col_index":None})
         inputs = ts_loader.produce(inputs = inputs).value.values
         inputs = np.reshape(inputs, inputs.shape + (1,))
@@ -141,7 +140,7 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
             The output is a numpy ndarray containing a predicted class for each of the input time series
         """
         #just take d3m index from input test set
-        output_df = inputs['d3mIndex']
+        #output_df = inputs['d3mIndex']
 
         ts_loader = TimeSeriesLoaderPrimitive(hyperparams = {"time_col_index":0, "value_col_index":1, "file_col_index":None})
         inputs = ts_loader.produce(inputs = inputs).value.values
@@ -150,23 +149,24 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         # add metadata to output
         # produce classifications using Shapelets
         classes = pandas.DataFrame(self._shapelets.PredictClasses(inputs))
-        output_df = pandas.concat([output_df, classes], axis = 1)
-        output_df.columns = [self._columns[0], self._columns[2]]
-        shallot_df = d3m_DataFrame(output_df)
+        #output_df = pandas.concat([output_df, classes], axis = 1)
+        #output_df.columns = [self._columns[0], self._columns[2]]
+        shallot_df = d3m_DataFrame(classes)
 
         # first column ('d3mIndex')
+        '''
         col_dict = dict(shallot_df.metadata.query((metadata_base.ALL_ELEMENTS, 0)))
         col_dict['structural_type'] = type("1")
         col_dict['name'] = 'd3mIndex'
         col_dict['semantic_types'] = ('http://schema.org/Integer', 'https://metadata.datadrivendiscovery.org/types/PrimaryKey',)
         shallot_df.metadata = shallot_df.metadata.update((metadata_base.ALL_ELEMENTS, 0), col_dict)
-       
+        '''
         # second column ('predictions')
-        col_dict = dict(shallot_df.metadata.query((metadata_base.ALL_ELEMENTS, 1)))
+        col_dict = dict(shallot_df.metadata.query((metadata_base.ALL_ELEMENTS, 0)))
         col_dict['structural_type'] = type("1")
         col_dict['name'] = 'predictions'
         col_dict['semantic_types'] = ('http://schema.org/Integer', 'https://metadata.datadrivendiscovery.org/types/Attribute',)
-        shallot_df.metadata = shallot_df.metadata.update((metadata_base.ALL_ELEMENTS, 1), col_dict)
+        shallot_df.metadata = shallot_df.metadata.update((metadata_base.ALL_ELEMENTS, 0), col_dict)
         return CallResult(shallot_df)
 
 if __name__ == '__main__':
@@ -177,7 +177,7 @@ if __name__ == '__main__':
     ds2df_client_labels = DatasetToDataFrame.DatasetToDataFramePrimitive(hyperparams = {"dataframe_resource":"learningData"})
     df = d3m_DataFrame(ds2df_client_values.produce(inputs = input_dataset).value)
     labels = d3m_DataFrame(ds2df_client_labels.produce(inputs = input_dataset).value)    
-    shallot_client = Shallot(hyperparams={'shapelet_length': 0.1,'num_shapelet_lengths': 2, 'epochs':200})
+    shallot_client = Shallot(hyperparams={'shapelet_length': 0.4,'num_shapelet_lengths': 2, 'epochs':1000})
     shallot_client.set_training_data(inputs = df, outputs = labels)
     shallot_client.fit()
     test_dataset = container.Dataset.load('file:///data/home/jgleason/D3m/datasets/seed_datasets_current/66_chlorineConcentration/TEST/dataset_TEST/datasetDoc.json')
