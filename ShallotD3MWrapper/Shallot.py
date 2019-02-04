@@ -171,10 +171,12 @@ if __name__ == '__main__':
         
     # Load data and preprocessing
     input_dataset = container.Dataset.load('file:///data/home/jgleason/D3m/datasets/seed_datasets_current/66_chlorineConcentration/TRAIN/dataset_TRAIN/datasetDoc.json')
+    hyperparams_class = DatasetToDataFrame.DatasetToDataFramePrimitive.metadata.query()['primitive_code']['class_type_arguments']['Hyperparams']
     ds2df_client_values = DatasetToDataFrame.DatasetToDataFramePrimitive(hyperparams = hyperparams_class.defaults().replace({"dataframe_resource":"0"}))
     ds2df_client_labels = DatasetToDataFrame.DatasetToDataFramePrimitive(hyperparams = hyperparams_class.defaults().replace({"dataframe_resource":"learningData"}))
     df = d3m_DataFrame(ds2df_client_labels.produce(inputs = input_dataset).value)
-    labels = d3m_DataFrame(ds2df_client_values.produce(inputs = input_dataset).value)    
+    labels = d3m_DataFrame(ds2df_client_values.produce(inputs = input_dataset).value)  
+    hyperparams_class = Shallot.metadata.query()['primitive_code']['class_type_arguments']['Hyperparams']
     shallot_client = Shallot(hyperparams=hyperparams_class.defaults().replace({'shapelet_length': 0.4,'num_shapelet_lengths': 2, 'epochs':100}))
     shallot_client.set_training_data(inputs = df, outputs = labels)
     shallot_client.fit()
