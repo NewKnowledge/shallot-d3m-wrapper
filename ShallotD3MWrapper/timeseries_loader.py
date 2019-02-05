@@ -70,8 +70,9 @@ class TimeSeriesLoaderPrimitive(transformer.TransformerPrimitiveBase[container.D
             'source': {
                 'name': 'Uncharted Software',
                 'contact': 'mailto:chris.bethune@uncharted.software'
+                'uris': [
                 # Unstructured URIs.
-                     "https://github.com/NewKnowledge/shallot-d3m-wrapper",
+                     "https://github.com/NewKnowledge/sloth-d3m-wrapper",
                 ],
             },
             'installation': [{
