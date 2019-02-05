@@ -69,7 +69,7 @@ class TimeSeriesLoaderPrimitive(transformer.TransformerPrimitiveBase[container.D
             'keywords': ['series', 'reader', 'csv'],
             'source': {
                 'name': 'Uncharted Software',
-                'contact': 'mailto:chris.bethune@uncharted.software'
+                'contact': 'mailto:chris.bethune@uncharted.software',
                 'uris': [
                 # Unstructured URIs.
                      "https://github.com/NewKnowledge/sloth-d3m-wrapper",
