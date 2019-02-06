@@ -67,16 +67,22 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
         # Of course Python packages can also have their own dependencies, but sometimes it is necessary to
         # install a Python package first to be even able to run setup.py of another package. Or you have
         # a dependency which is not on PyPi.
-         'installation': [{
-             'type': metadata_base.PrimitiveInstallationType.PIP,
-            'package': 'cython',
-            'version': '0.28.5',
-        },{
-            'type': metadata_base.PrimitiveInstallationType.PIP,
-            'package_uri': 'git+https://github.com/NewKnowledge/shallot-d3m-wrapper.git@{git_commit}#egg=ShallotD3MWrapper'.format(
-                git_commit=utils.current_git_commit(os.path.dirname(__file__)),
-            ),
-        }],
+         'installation': [
+             {
+                'type': metadata_base.PrimitiveInstallationType.PIP,
+                'package': 'cython',
+                'version': '0.28.5',
+             },
+             {
+                "type": "PIP",
+                "package_uri": "git+https://github.com/NewKnowledge/sloth.git@82a1e08049531270256f38ca838e6cc7d1119223#egg=Sloth"
+             },
+             {
+                'type': metadata_base.PrimitiveInstallationType.PIP,
+                'package_uri': 'git+https://github.com/NewKnowledge/shallot-d3m-wrapper.git@{git_commit}#egg=ShallotD3MWrapper'.format(
+                    git_commit=utils.current_git_commit(os.path.dirname(__file__)),)
+             }
+         ],
         # The same path the primitive is registered with entry points in setup.py.
         'python_path': 'd3m.primitives.time_series_classification.shapelet_learning.Shallot',
         # Choose these from a controlled vocabulary in the schema. If anything is missing which would
