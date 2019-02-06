@@ -75,7 +75,7 @@ class Shallot(PrimitiveBase[Inputs, Outputs, Params, Hyperparams]):
              },
              {
                 "type": "PIP",
-                "package_uri": "git+https://github.com/NewKnowledge/sloth.git@82a1e08049531270256f38ca838e6cc7d1119223#egg=Sloth"
+                "package_uri": "git+https://github.com/NewKnowledge/sloth.git@82a1e08049531270256f38ca838e6cc7d1119223#egg=Sloth-2.0.3"
              },
              {
                 'type': metadata_base.PrimitiveInstallationType.PIP,
